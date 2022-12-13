@@ -1,0 +1,29 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+.website-button {
+  background-color: transparent;
+  border: 4px solid white;
+  border-radius: 50%;
+  color: white;
+  padding: 12px 12px;
+  text-align: center;
+  font-size: 24px;
+  font-family: 'Trebuchet MS';
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.website-button:hover {
+  margin: -4px -4px;
+  border-width: 5px;
+  color: lightseagreen;
+  border-color: lightseagreen;
+  padding: 15px 15px;
+}
