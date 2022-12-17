@@ -1,4 +1,8 @@
 # Pathfinding-Application
+<<<<<<< Updated upstream
+=======
+ 
+>>>>>>> Stashed changes
  
  https://vihaanjaiswal.github.io/Pathfinding-Application/
  
