@@ -182,7 +182,7 @@ function createNavBar() {
 
 /////////// CHANGE MODES /////////////
 
-function mousePressed() {
+function mouseDragged() {
   var gridX = mouseX;
   var gridY = mouseY;
   if(isInGrid(gridX, gridY)) {
