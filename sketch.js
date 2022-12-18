@@ -14,7 +14,7 @@ var endY;
 let changeStart;
 let changeEnd;
 let buildWalls;
-let deleteWalls;
+let breakWalls;
 let startButton;
 let selectSort;
 let makeMaze;
@@ -144,6 +144,18 @@ function initializeButtons() {
   changeStart.class('move-start-button');
   changeStart.mousePressed(moveStartMode);
 
+  changeEnd = createButton('Move End');
+  changeEnd.class('move-start-button');
+  changeEnd.mousePressed(moveEndMode);
+
+  buildWalls = createButton('Build Walls');
+  buildWalls.class('move-start-button');
+  buildWalls.mousePressed(buildWallsMode);
+
+  breakWalls = createButton('Break Walls');
+  breakWalls.class('move-start-button');
+  breakWalls.mousePressed(breakWallsMode);
+
   startButton = createButton('Start');
   startButton.class('start-button');
   startButton.mousePressed(startAlgorithm);
@@ -161,6 +173,9 @@ function createNavBar() {
   text('APPLICATION', 10, 68);
 
   changeStart.position(500, 10);
+  changeEnd.position(600, 10);
+  buildWalls.position(700, 10);
+  breakWalls.position(800, 10);
   startButton.position(300, 10);
   websiteButton.position(width - 70, 10);
 }
@@ -177,16 +192,27 @@ function mousePressed() {
     gridY = floor(gridY / scl);
 
     if(buildMode == 1) {
-      grid[startY][startX] = new Cell(grid[startY][startX].i, grid[startY][startX].j, 0);
-      startX = gridX;
-      startY = gridY;
-      grid[startY][startX] = new Cell(grid[startY][startX].i, grid[startY][startX].j, 2);
+      if(gridX != endX || gridY != endY){
+        grid[startY][startX] = new Cell(grid[startY][startX].i, grid[startY][startX].j, 0);
+        startX = gridX;
+        startY = gridY;
+        grid[startY][startX] = new Cell(grid[startY][startX].i, grid[startY][startX].j, 2);
+      }
     } else if(buildMode == 2) {
-
+      if(gridX != startX || gridY != startY) {
+        grid[endY][endX] = new Cell(grid[endY][endX].i, grid[endY][endX].j, 0);
+        endX = gridX;
+        endY = gridY;
+        grid[endY][endX] = new Cell(grid[endY][endX].i, grid[endY][endX].j, 3);
+      }
     } else if(buildMode == 3) {
-
+      if((gridX != endX || gridY != endY) && (gridX != startX || gridY != startY)) {
+        grid[gridY][gridX] = new Cell(grid[gridY][gridX].i, grid[gridY][gridX].j, 1);
+      }
     } else if(buildMode == 4) {
-
+      if((gridX != endX || gridY != endY) && (gridX != startX || gridY != startY)) {
+        grid[gridY][gridX] = new Cell(grid[gridY][gridX].i, grid[gridY][gridX].j, 0);
+      }
     }
   }
 }
@@ -206,17 +232,17 @@ function moveStartMode() {
   buildMode = 1;
 }
 
-// function moveEnd() {
-//   buildMode = 2;
-// }
+function moveEndMode() {
+  buildMode = 2;
+}
 
-// function buildWalls() {
-//   buildMode = 3;
-// }
+function buildWallsMode() {
+  buildMode = 3;
+}
 
-// function breakWalls() {
-//   buildMode = 4;
-// }
+function breakWallsMode() {
+  buildMode = 4;
+}
 
 /////////// ALGORITHMS /////////////
 function startAlgorithm() {
