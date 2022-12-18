@@ -49,7 +49,6 @@ function draw() {
   }
 
   createNavBar();
-
 }
 
 function windowResized() {
@@ -141,6 +140,10 @@ function initializeGrid() {
 }
 
 function initializeButtons() {
+  changeStart = createButton('Move Start');
+  changeStart.class('move-start-button');
+  changeStart.mousePressed(moveStartMode);
+
   startButton = createButton('Start');
   startButton.class('start-button');
   startButton.mousePressed(startAlgorithm);
@@ -157,9 +160,63 @@ function createNavBar() {
   textSize(25);
   text('APPLICATION', 10, 68);
 
+  changeStart.position(500, 10);
   startButton.position(300, 10);
   websiteButton.position(width - 70, 10);
 }
+
+/////////// CHANGE MODES /////////////
+
+function mousePressed() {
+  var gridX = mouseX;
+  var gridY = mouseY;
+  if(isInGrid(gridX, gridY)) {
+    gridX -= (1/2) * (width - (cols * scl));
+    gridY -= (1/2) * (height + navBarSize - (rows * scl));
+    gridX = floor(gridX / scl);
+    gridY = floor(gridY / scl);
+
+    if(buildMode == 1) {
+      grid[startY][startX] = new Cell(grid[startY][startX].i, grid[startY][startX].j, 0);
+      startX = gridX;
+      startY = gridY;
+      grid[startY][startX] = new Cell(grid[startY][startX].i, grid[startY][startX].j, 2);
+    } else if(buildMode == 2) {
+
+    } else if(buildMode == 3) {
+
+    } else if(buildMode == 4) {
+
+    }
+  }
+}
+
+function isInGrid(x, y) {
+  var minX = (1/2) * (width - (cols * scl));
+  var minY = (1/2) * (height + navBarSize - (rows * scl));
+  var maxX = (1/2) * (width + (cols * scl));
+  var maxY = (1/2) * (height + navBarSize + (rows * scl));
+  if(x >= minX && x < maxX && y >= minY && y < maxY) {
+    return true;
+  }
+  return false;
+}
+
+function moveStartMode() {
+  buildMode = 1;
+}
+
+// function moveEnd() {
+//   buildMode = 2;
+// }
+
+// function buildWalls() {
+//   buildMode = 3;
+// }
+
+// function breakWalls() {
+//   buildMode = 4;
+// }
 
 /////////// ALGORITHMS /////////////
 function startAlgorithm() {
@@ -200,9 +257,9 @@ class Cell {
 
     this.show = function () {
       var xOff = (1/2) * (width - (cols * scl));
-      var yOff = (1/2) * (height - navBarSize - (rows * scl));
+      var yOff = (1/2) * (height + navBarSize - (rows * scl));
       var x = this.j * scl + xOff;
-      var y = this.i * scl + yOff + navBarSize;
+      var y = this.i * scl + yOff;
       
       stroke(200);
       
